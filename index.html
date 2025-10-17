@@ -5,8 +5,8 @@
   <meta name="google-site-verification" content="nQ1NXJouz3tMpwGnF91_Iqu3ORamVYhRLYi0Zr_RzUE" />
   <meta name="keywords" content="8th C Elections, 8th C Elects, Elections Class 8th C">
   <meta name="description" content="8th C Elects - School Voting System by Swapnil Pandey is the official voting site for class PM SHRI KV NO.1 AFS SAMBRA's 8th C election activity. This site would only be accessible till 21/10/2025.">
-  <link rel="icon" href="logo.png">
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>8th C Elects - School Voting System by Swapnil Pandey</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -32,6 +32,7 @@
     .header { text-align:center; color:var(--white); margin-bottom:30px;}
     .header h1 { font-size:2.5rem; text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
     .header p { font-size:1.2rem; opacity:0.9;}
+    .logo { width:80px; height:80px; margin:0 auto 20px auto; display:block; border-radius:10px; box-shadow:0 4px 15px rgba(255,255,255,0.2);}
     .card {
       background:var(--white);
       border-radius:15px;
@@ -69,14 +70,20 @@
     .btn-secondary:hover { background:#555;}
     .btn-success { background:var(--success-color);}
     .btn-success:hover { background:#218838;}
+    .btn-large {
+      padding: 20px 30px;
+      font-size: 1.3rem;
+      margin: 20px 0;
+    }
     .alert {
       padding:12px; border-radius:8px; margin-bottom:20px; font-weight:500;
     }
     .alert-success { background:#d4edda; color:#155724; border:1px solid #c3e6cb;}
     .alert-error { background:#f8d7da; color:#721c24; border:1px solid #f5c6cb;}
     .alert-warning { background:#fff3cd; color:#856404; border:1px solid #ffeeba;}
-    .hidden { display:none;}
+    .hidden { display:none !important;}
     .navigation { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+    .navigation .logo-nav { width:50px; height:50px;}
     .stats-grid {
       display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
       gap:16px; margin-bottom:20px;
@@ -89,39 +96,113 @@
     .stat-label { font-size:0.95rem; color:var(--text-light); margin-top:6px;}
     .parties-grid {
       display:grid; gap:20px;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      margin-bottom: 30px;
     }
     .party-card {
       background:var(--white); border-radius:12px;
-      box-shadow:var(--shadow); transition:transform 0.3s,box-shadow 0.3s;
-      cursor:pointer; position:relative;
+      box-shadow:var(--shadow); transition:all 0.2s ease;
+      cursor:pointer; position:relative; min-height:120px;
+      border: 3px solid transparent;
     }
     .party-card:hover {
-      transform:translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      transform:translateY(-3px); 
+      box-shadow:0 6px 20px rgba(0,0,0,0.15);
     }
-    .party-header { padding:20px; color:var(--white); text-align:center;}
-    .party-candidates { padding:20px; background:var(--light-bg);}
-    .candidate-row {
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid rgba(0,0,0,0.1);
+    .party-card.selected {
+      transform:translateY(-3px); 
+      box-shadow:0 6px 20px rgba(31, 78, 121, 0.3);
+      border: 3px solid var(--primary-color);
     }
-    .candidate-row:last-child { border-bottom:none;}
-    .candidate { font-weight:600; color:var(--text-dark);}
-    .celebration {
-      text-align:center; padding:30px;
-      background:linear-gradient(45deg,var(--success-color),#20c997);
-      color:var(--white); border-radius:15px; margin:20px 0;
+    .party-header { 
+      padding:20px; 
+      color:var(--white); 
+      text-align:center; 
+      border-radius:9px 9px 0 0;
     }
-    .celebration h2 { font-size:2rem; margin-bottom:15px;}
-    .celebration p { font-size:1.1rem; opacity:0.9;}
+    .party-header h3 { 
+      font-size: 1.2rem; 
+      margin-bottom: 5px; 
+    }
+    .party-header p { 
+      font-size: 1.1rem; 
+      font-weight: 600; 
+      opacity: 0.95;
+    }
+    .success-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--success-color), #20c997);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .success-overlay h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: pulse 1s ease-in-out;
+    }
+    .success-overlay p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    .countdown-text {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
     .chart-container {
       background:var(--white); border-radius:10px;
       padding:20px; box-shadow:var(--shadow); height:500px;
       margin-bottom:20px;
     }
+    .voting-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .voting-header .logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+    }
+    .voting-booth-mode {
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .total-votes-display {
+      background: var(--primary-color);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
     @media (max-width:768px) {
       .header h1 { font-size:2rem;}
       .container { padding:10px;}
+      .logo { width:60px; height:60px;}
+      .parties-grid { grid-template-columns: 1fr; }
+      .success-overlay h2 { font-size: 2rem; }
+      .success-overlay p { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -129,6 +210,7 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
+      <img src="favicon.png" alt="8th C Logo" class="logo" onerror="this.style.display='none'">
       <h1>🗳️ 8th C Elects</h1>
       <p>Official School Voting System - Class 8C Elections<br/>—by Swapnil Pandey</p>
     </div>
@@ -136,24 +218,21 @@
     <!-- Login Section -->
     <div id="loginSection" class="card login-container">
       <div class="login-tabs">
-        <button id="studentTab" class="tab-button active" onclick="switchTab('student')">Student Login</button>
-        <button id="adminTab" class="tab-button" onclick="switchTab('admin')">Admin Login</button>
+        <button id="voterTab" class="tab-button active" onclick="switchTab('voter')">Polling Booth</button>
+        <button id="adminTab" class="tab-button" onclick="switchTab('admin')">Admin Panel</button>
       </div>
       <div id="alertContainer"></div>
-      <!-- Student Login -->
-      <div id="studentLogin">
-        <form onsubmit="studentLogin(event)">
-          <div class="form-group">
-            <label class="form-label">Student ID</label>
-            <input type="text" id="studentId" class="form-control" placeholder="8C001" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" id="studentName" class="form-control" placeholder="Your Name" required/>
-          </div>
-          <button type="submit" class="btn">Login to Vote</button>
-        </form>
+      
+      <!-- Polling Booth Panel -->
+      <div id="voterPanel">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="favicon.png" alt="Logo" style="width: 50px; height: 50px; margin-bottom: 15px;" onerror="this.style.display='none'">
+          <h3>🗳️ Polling Booth</h3>
+          <p>Ready for continuous voting</p>
+        </div>
+        <button type="button" class="btn btn-large" onclick="startVoting()">▶️ Start Continuous Voting</button>
       </div>
+
       <!-- Admin Login -->
       <div id="adminLogin" class="hidden">
         <form onsubmit="adminLogin(event)">
@@ -173,35 +252,38 @@
     <!-- Voting Section -->
     <div id="votingSection" class="hidden">
       <div class="card">
-        <div class="navigation">
-          <div>
-            <h2>Welcome, <span id="welcomeName"></span>!</h2>
-            <p>Cast your vote for Class 8C Elections</p>
-          </div>
-          <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        <div class="voting-header">
+          <img src="favicon.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+          <h2>Class 8C Elections</h2>
+          <p><strong>Select Your Preferred Candidate</strong></p>
         </div>
+
+        <div class="voting-booth-mode">
+          <h3>🏛️ POLLING BOOTH MODE ACTIVE</h3>
+          <p>Continuous voting in progress</p>
+        </div>
+
+        <div class="total-votes-display" id="liveVoteCount">
+          Total Votes Cast: 0
+        </div>
+
+        <div class="navigation">
+          <div></div>
+          <button class="btn btn-secondary" onclick="backToHome()">🏠 Exit Polling Booth</button>
+        </div>
+        
         <div id="votingAlerts"></div>
         <div class="parties-grid" id="partiesGrid"></div>
-        <button class="btn btn-success" onclick="submitVote(event)">🗳️ Vote</button>
+        <button class="btn btn-success btn-large" onclick="submitVote()" id="voteButton">🗳️ CAST VOTE</button>
       </div>
     </div>
 
-    <!-- Vote Success -->
-    <div id="voteSuccessSection" class="hidden">
-      <div class="celebration">
-        <h2>🎉 Vote Submitted Successfully!</h2>
-        <p>Thank you for participating in the Class 8C Elections.</p>
-      </div>
-      <button class="btn" onclick="logout()">Return to Login</button>
-    </div>
-
-    <!-- Already Voted -->
-    <div id="alreadyVotedSection" class="hidden">
-      <div class="card">
-        <div class="alert alert-warning">
-          <strong>You have already voted!</strong><br/>Thank you for your participation.
-        </div>
-        <button class="btn" onclick="logout()">Return to Login</button>
+    <!-- Success Overlay -->
+    <div id="successOverlay" class="success-overlay hidden">
+      <h2>🎉 VOTE RECORDED!</h2>
+      <p>Thank you for voting</p>
+      <div class="countdown-text">
+        Returning to voting in <span id="countdown">2</span> seconds...
       </div>
     </div>
 
@@ -209,9 +291,12 @@
     <div id="adminSection" class="hidden">
       <div class="card">
         <div class="navigation">
-          <div>
-            <h2>🔐 Admin Dashboard</h2>
-            <p>Class 8C Election Results —by Swapnil Pandey</p>
+          <div style="display: flex; align-items: center;">
+            <img src="favicon.png" alt="Logo" class="logo-nav" onerror="this.style.display='none'" style="margin-right: 15px;">
+            <div>
+              <h2>🔐 Admin Dashboard</h2>
+              <p>Class 8C Election Results —by Swapnil Pandey</p>
+            </div>
           </div>
           <button class="btn btn-secondary" onclick="logout()">Logout</button>
         </div>
@@ -221,238 +306,451 @@
             <div class="stat-label">Total Votes</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="eligibleVoters">0</div>
-            <div class="stat-label">Eligible Voters</div>
+            <div class="stat-number" id="leadingCandidate">-</div>
+            <div class="stat-label">Leading Candidate</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="turnoutPercentage">0%</div>
-            <div class="stat-label">Turnout</div>
+            <div class="stat-number" id="highestVotes">0</div>
+            <div class="stat-label">Highest Votes</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="pendingVoters">0</div>
-            <div class="stat-label">Pending</div>
+            <div class="stat-number" id="votingRate">Ready</div>
+            <div class="stat-label">Booth Status</div>
           </div>
         </div>
         <div class="chart-container">
           <canvas id="partyChart"></canvas>
         </div>
         <div id="partyBreakdown"></div>
-        <button class="btn" onclick="exportResults()">Export Results</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn" onclick="exportResults()" style="flex: 1;">📊 Export Results</button>
+          <button class="btn btn-secondary" onclick="resetVotes()" style="flex: 1;">🔄 Reset All Votes</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    let currentUser=null, votedStudents=[], charts={};
-    const partyVotes={ 'Unity':0,'Progress':0,'Action':0,'Service':0,'Innovation':0 };
-    const parties={
-      'Unity':{color:'#3498db',slogan:'Gender Equality'},
-      'Progress':{color:'#e74c3c',slogan:'Excellence'},
-      'Action':{color:'#2ecc71',slogan:'Making Happen'},
-      'Service':{color:'#f39c12',slogan:'Serving Community'},
-      'Innovation':{color:'#9b59b6',slogan:'Creative Solutions'}
+    // Global variables
+    let charts = {};
+    let countdownTimer = null;
+    let selectedParty = null;
+    
+    // Vote data
+    const partyVotes = {
+      'Future Force Party': 0,
+      'Curious Minds': 0,
+      'Bhartiya Ekta Party': 0,
+      'Student Unity Party': 0,
+      'Josh Party': 0,
+      'NOTA': 0
     };
 
-    // FIXED: Added missing comma after 'DM002': 'DEMOAC2'
-    const students={
-      'DM001': 'DEMOAC',
-      'DM002': 'DEMOAC2',
-      '8C001': 'Aarush',
-      '8C002': 'Ananya Gupta',
-      '8C003': 'Adarsh',
-      '8C004': 'Diya Singh',
-      '8C005': 'Ishaan Kumar',
-      '8C006': 'Kavya Reddy',
-      '8C007': 'Kiran Joshi',
-      '8C008': 'Arpit Chaudhary',
-      '8C009': 'Nikhil Verma',
-      '8C010': 'Priya Nair',
-      '8C011': 'Rahul Mishra',
-      '8C012': 'Riya Das',
-      '8C013': 'Rohan Sinha',
-      '8C014': 'Sneha Iyer',
-      '8C015': 'Tanvi Bhatt',
-      '8C016': 'Varun Malhotra',
-      '8C017': 'Vidya Rao',
-      '8C018': 'Yash Pandey',
-      '8C019': 'Zara Khan',
-      '8C020': 'Aman Saxena',
-      '8C021': 'Bhavika Tiwari',
-      '8C022': 'Chinmay Dubey',
-      '8C023': 'Deepika Jain',
-      '8C024': 'Eshan Kapoor',
-      '8C025': 'Fatima Ali',
-      '8C026': 'Aadhav Sharma',
-      '8C027': 'Ananya Gupta',
-      '8C028': 'Sanjeet',
-      '8C029': 'Diya Singh',
-      '8C030': 'Ishaan Kumar',
-      '8C031': 'Kavya Reddy',
-      '8C032': 'Kiran Joshi',
-      '8C033': 'Meera Agarwal',
-      '8C034': 'Nikhil Verma',
-      '8C035': 'Priya Nair',
-      '8C036': 'Sreenitha',
-      '8C037': 'Sujal',
-      '8C038': 'Swapnil',
-      '8C039': 'Tanaaz',
-      '8C040': 'Tanvi',
-      '8C041': 'Vaishnavi',
-      '8C042': 'Yash',
-      '8C043': 'Deepanshi',
-      '8C044': 'Mokshit',
-      '8C045': 'Nisarga',
-      'TC001': 'Maseera B',
-      'TC002': 'Usha R',
-      'TC003': 'Laxmi AR',
-      'TC004': 'SP Methi',
-      'TC005': 'Anil KS',
-      'TC006': 'Sushma J',
-      'TC007': 'Tribhuvan',
-      'TC008': 'Princy S'
+    const parties = {
+      'Future Force Party': { color: '#3498db', candidate: 'Yash' },
+      'Curious Minds': { color: '#e74c3c', candidate: 'Deepanshi' },
+      'Bhartiya Ekta Party': { color: '#2ecc71', candidate: 'Sanjeet' },
+      'Student Unity Party': { color: '#f39c12', candidate: 'Bhumika' },
+      'Josh Party': { color: '#9b59b6', candidate: 'Anushree' },
+      'NOTA': { color: '#95a5a6', candidate: 'None Of The Above' }
     };
 
-    const adminCred={user:'ECMB',pass:'Maseera@KVSAM'};
+    const adminCred = { user: 'ECMB', pass: 'Maseera@KVSAM' };
 
-    function showAlert(id,msg,type){
-      document.getElementById(id).innerHTML=`<div class="alert alert-${type}">${msg}</div>`;
-      setTimeout(()=>document.getElementById(id).innerHTML='',5000);
-    }
-    function showSection(id){
-      ['loginSection','votingSection','voteSuccessSection','alreadyVotedSection','adminSection']
-        .forEach(s=>document.getElementById(s).classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-    }
-    function switchTab(tab){
-      document.getElementById('studentTab').classList.toggle('active',tab==='student');
-      document.getElementById('adminTab').classList.toggle('active',tab==='admin');
-      document.getElementById('studentLogin').classList.toggle('hidden',tab!=='student');
-      document.getElementById('adminLogin').classList.toggle('hidden',tab!=='admin');
-    }
-    function loadState(){
-      try{
-        const s=JSON.parse(localStorage.getItem('state')||'{}');
-        votedStudents=s.votedStudents||[]; Object.assign(partyVotes,s.partyVotes||{});
-      }catch{}
-    }
-    function persistState(){
-      localStorage.setItem('state',JSON.stringify({votedStudents,partyVotes}));
-    }
-    function studentLogin(e){
-      e.preventDefault();
-      const id=document.getElementById('studentId').value.trim().toUpperCase();
-      const name=document.getElementById('studentName').value.trim();
-      if(!students[id]||students[id].toLowerCase()!==name.toLowerCase())
-        return showAlert('alertContainer','Invalid credentials','error');
-      if(votedStudents.includes(id)) return showSection('alreadyVotedSection');
-      currentUser=id;
-      document.getElementById('welcomeName').textContent=students[id];
-      renderParties(); showSection('votingSection');
-    }
-    function adminLogin(e){
-      e.preventDefault();
-      if(document.getElementById('adminUsername').value!==adminCred.user||
-         document.getElementById('adminPassword').value!==adminCred.pass)
-        return showAlert('alertContainer','Invalid admin credentials','error');
-      showSection('adminSection'); updateAdminDashboard();
+    // Utility functions
+    function showAlert(containerId, message, type) {
+      const container = document.getElementById(containerId);
+      if (container) {
+        container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+        setTimeout(() => {
+          container.innerHTML = '';
+        }, 3000);
+      }
     }
 
-    function renderParties(){
-      const grid=document.getElementById('partiesGrid');
-      grid.innerHTML='';
-      Object.entries(parties).forEach(([k,v])=>{
-        const pid=k.replace(/\W/g,'_');
-        const candidates = Array.isArray(v.candidates) ? v.candidates : [];
-        const card=document.createElement('div'); card.className='party-card';
-        card.style.borderLeft=`5px solid ${v.color}`;
-        card.innerHTML=`
-          <div class="party-header" style="background: linear-gradient(135deg, ${v.color} 0%, ${v.color}CC 100%);">
-            <input type="radio" name="party" id="${pid}" value="${k}" class="party-radio" style="margin-right:8px"/>
-            <label for="${pid}"><h3>${k} Party</h3><p>${v.slogan}</p></label>
-          </div>
-          <div class="party-candidates">
-            ${candidates.map(c=>`<div class="candidate-row"><span class="candidate">${c}</span></div>`).join('')}
+    function showSection(sectionId) {
+      const sections = ['loginSection', 'votingSection', 'adminSection'];
+      sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add('hidden');
+        }
+      });
+      
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+      }
+    }
+
+    function switchTab(tab) {
+      const voterTab = document.getElementById('voterTab');
+      const adminTab = document.getElementById('adminTab');
+      const voterPanel = document.getElementById('voterPanel');
+      const adminLogin = document.getElementById('adminLogin');
+
+      if (tab === 'voter') {
+        voterTab.classList.add('active');
+        adminTab.classList.remove('active');
+        voterPanel.classList.remove('hidden');
+        adminLogin.classList.add('hidden');
+      } else {
+        adminTab.classList.add('active');
+        voterTab.classList.remove('active');
+        adminLogin.classList.remove('hidden');
+        voterPanel.classList.add('hidden');
+      }
+    }
+
+    // Storage functions
+    function loadState() {
+      try {
+        const savedState = localStorage.getItem('votingState');
+        if (savedState) {
+          const state = JSON.parse(savedState);
+          Object.assign(partyVotes, state.partyVotes || {});
+        }
+      } catch (error) {
+        console.log('No previous voting state found');
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('votingState', JSON.stringify({ partyVotes }));
+      } catch (error) {
+        console.error('Failed to save voting state');
+      }
+    }
+
+    // Voting functions
+    function startVoting() {
+      renderVotingCards();
+      updateLiveVoteCount();
+      showSection('votingSection');
+    }
+
+    function renderVotingCards() {
+      const grid = document.getElementById('partiesGrid');
+      if (!grid) return;
+      
+      grid.innerHTML = '';
+      
+      Object.entries(parties).forEach(([partyName, partyData]) => {
+        const card = document.createElement('div');
+        card.className = 'party-card';
+        card.dataset.party = partyName;
+        
+        card.innerHTML = `
+          <div class="party-header" style="background: linear-gradient(135deg, ${partyData.color} 0%, ${partyData.color}CC 100%);">
+            <h3>${partyName}</h3>
+            <p>${partyData.candidate}</p>
           </div>
         `;
-        // Make the whole card select the radio
-        card.addEventListener('click',()=>{
-          const r=card.querySelector('.party-radio');
-          r.checked=true;
+        
+        card.addEventListener('click', function() {
+          // Clear previous selections
+          document.querySelectorAll('.party-card').forEach(c => {
+            c.classList.remove('selected');
+          });
+          
+          // Select this card
+          this.classList.add('selected');
+          selectedParty = partyName;
         });
+        
         grid.appendChild(card);
       });
     }
 
-    function submitVote(e){
-      e.preventDefault();
-      const sel=document.querySelector('input[name="party"]:checked');
-      if(!sel) return showAlert('votingAlerts','Select a party','error');
-      partyVotes[sel.value]++; votedStudents.push(currentUser);
-      persistState(); showSection('voteSuccessSection'); setTimeout(confetti,500);
+    function submitVote() {
+      if (!selectedParty) {
+        showAlert('votingAlerts', 'Please select a candidate to vote for', 'error');
+        return;
+      }
+      
+      // Record the vote
+      partyVotes[selectedParty]++;
+      saveState();
+      
+      // Show success and prepare for next vote
+      showSuccessOverlay();
+      
+      // Update live count
+      updateLiveVoteCount();
     }
 
-    function updateAdminDashboard(){
-      document.getElementById('totalVotes').textContent=votedStudents.length;
-      const elig=Object.keys(students).length;
-      document.getElementById('eligibleVoters').textContent=elig;
-      document.getElementById('turnoutPercentage').textContent=elig?Math.round(votedStudents.length/elig*100)+'%':'0%';
-      document.getElementById('pendingVoters').textContent=elig-votedStudents.length;
-      renderChart(); renderBreakdown();
+    function showSuccessOverlay() {
+      const overlay = document.getElementById('successOverlay');
+      const countdownSpan = document.getElementById('countdown');
+      
+      if (!overlay || !countdownSpan) return;
+      
+      overlay.classList.remove('hidden');
+      
+      let timeLeft = 2;
+      countdownSpan.textContent = timeLeft;
+      
+      // Clear any existing timer
+      if (countdownTimer) {
+        clearTimeout(countdownTimer);
+      }
+      
+      // Countdown and return to voting
+      const countdown = setInterval(() => {
+        timeLeft--;
+        countdownSpan.textContent = timeLeft;
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          overlay.classList.add('hidden');
+          
+          // Reset for next vote
+          selectedParty = null;
+          document.querySelectorAll('.party-card').forEach(card => {
+            card.classList.remove('selected');
+          });
+          
+          // Update vote count
+          updateLiveVoteCount();
+        }
+      }, 1000);
+      
+      // Create confetti effect
+      createConfetti();
     }
 
-    function renderChart(){
-      const can=document.getElementById('partyChart');
-      if(!can)return;
-      const ctx=can.getContext('2d'); if(!ctx)return;
-      if(charts.p)charts.p.destroy();
-      charts.p=new Chart(ctx,{type:'doughnut',data:{
-        labels:Object.keys(partyVotes),
-        datasets:[{data:Object.values(partyVotes),
-          backgroundColor:Object.keys(partyVotes).map(k=>parties[k].color)}]
-      },options:{responsive:true,maintainAspectRatio:false}});
+    function updateLiveVoteCount() {
+      const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+      const liveCount = document.getElementById('liveVoteCount');
+      if (liveCount) {
+        liveCount.textContent = `Total Votes Cast: ${totalVotes}`;
+      }
     }
 
-    function renderBreakdown(){
-      const cont=document.getElementById('partyBreakdown');
-      const total=votedStudents.length;
-      if(!total){cont.innerHTML='<p style="text-align:center;color:var(--text-light)">No votes yet</p>';return;}
-      cont.innerHTML=Object.entries(partyVotes).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>
-        `<div style="border-left:4px solid ${parties[k].color};padding:15px;margin-bottom:15px;background:var(--light-bg);border-radius:8px">
-          <strong>#${i+1} ${k}: ${v} (${Math.round(v/total*100)}%)</strong>
-        </div>`
-      ).join('');
+    function createConfetti() {
+      const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+      
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * window.innerWidth + 'px';
+          confetti.style.top = '-10px';
+          confetti.style.width = '8px';
+          confetti.style.height = '8px';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.borderRadius = '50%';
+          confetti.style.zIndex = '9999';
+          confetti.style.pointerEvents = 'none';
+          
+          document.body.appendChild(confetti);
+          
+          confetti.animate([
+            { transform: 'translateY(-10px) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(${window.innerHeight + 20}px) rotate(720deg)`, opacity: 0 }
+          ], {
+            duration: 3000,
+            easing: 'ease-out'
+          }).onfinish = () => {
+            if (confetti.parentNode) {
+              confetti.parentNode.removeChild(confetti);
+            }
+          };
+        }, i * 20);
+      }
     }
 
-    function exportResults(){
-      const total=votedStudents.length;
-      let txt=`Class 8C Election Results\nTotal Votes: ${total}\n`;
-      Object.entries(partyVotes).sort((a,b)=>b[1]-a[1]).forEach(([k,v],i)=>{
-        const pct=total?Math.round(v/total*100):0;
-        txt+=`${i+1}. ${k}: ${v} (${pct}%)\n`;
+    // Admin functions
+    function adminLogin(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('adminUsername').value;
+      const password = document.getElementById('adminPassword').value;
+      
+      if (username !== adminCred.user || password !== adminCred.pass) {
+        showAlert('alertContainer', 'Invalid admin credentials', 'error');
+        return;
+      }
+      
+      showSection('adminSection');
+      updateAdminDashboard();
+    }
+
+    function updateAdminDashboard() {
+      const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+      
+      // Update stats
+      document.getElementById('totalVotes').textContent = totalVotes;
+      
+      // Find leading candidate
+      let leadingParty = '';
+      let highestVotes = 0;
+      Object.entries(partyVotes).forEach(([party, votes]) => {
+        if (votes > highestVotes) {
+          highestVotes = votes;
+          leadingParty = parties[party].candidate;
+        }
       });
-      const blob=new Blob([txt],{type:'text/plain'}),url=URL.createObjectURL(blob);
-      const a=document.createElement('a');a.href=url;a.download='results.txt';
-      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      
+      document.getElementById('leadingCandidate').textContent = leadingParty || 'None';
+      document.getElementById('highestVotes').textContent = highestVotes;
+      document.getElementById('votingRate').textContent = totalVotes > 0 ? 'Active' : 'Ready';
+      
+      renderChart();
+      renderBreakdown();
+    }
+
+    function renderChart() {
+      const canvas = document.getElementById('partyChart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      
+      // Destroy existing chart
+      if (charts.main) {
+        charts.main.destroy();
+      }
+      
+      const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+      
+      if (totalVotes === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#666';
+        ctx.textAlign = 'center';
+        ctx.fillText('No votes cast yet', canvas.width / 2, canvas.height / 2);
+        return;
+      }
+      
+      charts.main = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(partyVotes).map(party => `${party} (${parties[party].candidate})`),
+          datasets: [{
+            data: Object.values(partyVotes),
+            backgroundColor: Object.keys(partyVotes).map(party => parties[party].color),
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 20,
+                usePointStyle: true
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderBreakdown() {
+      const container = document.getElementById('partyBreakdown');
+      if (!container) return;
+      
+      const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+      
+      if (totalVotes === 0) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-light)">No votes cast yet</p>';
+        return;
+      }
+      
+      const sortedResults = Object.entries(partyVotes)
+        .sort(([,a], [,b]) => b - a)
+        .map(([party, votes], index) => {
+          const percentage = Math.round((votes / totalVotes) * 100);
+          return `
+            <div style="border-left:4px solid ${parties[party].color};padding:15px;margin-bottom:15px;background:var(--light-bg);border-radius:8px">
+              <strong>#${index + 1} ${party}</strong><br>
+              <span style="color:var(--text-light)">Candidate: ${parties[party].candidate}</span><br>
+              <span style="font-size:1.2em;color:var(--primary-color);">${votes} votes (${percentage}%)</span>
+            </div>
+          `;
+        });
+      
+      container.innerHTML = sortedResults.join('');
+    }
+
+    function exportResults() {
+      const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+      let resultText = `Class 8C Election Results - FINAL REPORT\n`;
+      resultText += `Generated on: ${new Date().toLocaleString()}\n`;
+      resultText += `Total Votes Cast: ${totalVotes}\n\n`;
+      resultText += `RESULTS (Ranked by Votes Received):\n`;
+      resultText += `${'='.repeat(60)}\n`;
+      
+      const sortedResults = Object.entries(partyVotes).sort(([,a], [,b]) => b - a);
+      
+      sortedResults.forEach(([party, votes], index) => {
+        const percentage = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
+        resultText += `${index + 1}. ${party}\n`;
+        resultText += `   Candidate: ${parties[party].candidate}\n`;
+        resultText += `   Votes Received: ${votes} (${percentage}%)\n\n`;
+      });
+      
+      if (totalVotes > 0) {
+        const winner = sortedResults[0];
+        resultText += `WINNER: ${winner[0]} - ${parties[winner[0]].candidate}\n`;
+        resultText += `Winning Margin: ${winner[1]} votes\n`;
+      }
+      
+      const blob = new Blob([resultText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `8C_Election_Results_${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       URL.revokeObjectURL(url);
     }
 
-    function logout(){currentUser=null;showSection('loginSection');switchTab('student');}
-
-    function confetti(){
-      ['#1f4e79','#28a745','#ffc107','#dc3545','#17a2b8'].forEach((c,i)=>{
-        setTimeout(()=>{
-          const d=document.createElement('div');
-          d.style.position='fixed';d.style.top='-10px';d.style.left=Math.random()*innerWidth+'px';
-          d.style.width=d.style.height='8px';d.style.backgroundColor=c;d.style.borderRadius='50%';
-          d.style.zIndex='9999';
-          document.body.appendChild(d);
-          d.animate([{transform:'translateY(-10px)',opacity:1},{transform:`translateY(${innerHeight+10}px)`,opacity:0}],{duration:3000,easing:'ease-out'}).onfinish=()=>d.remove();
-        },i*100);
-      });
+    function resetVotes() {
+      if (confirm('Are you sure you want to reset all votes? This action cannot be undone.')) {
+        Object.keys(partyVotes).forEach(party => {
+          partyVotes[party] = 0;
+        });
+        saveState();
+        updateAdminDashboard();
+        showAlert('votingAlerts', 'All votes have been reset successfully', 'success');
+      }
     }
 
-    document.addEventListener('DOMContentLoaded',()=>{
-      loadState(); showSection('loginSection');
+    // Navigation functions
+    function backToHome() {
+      if (countdownTimer) {
+        clearTimeout(countdownTimer);
+      }
+      document.getElementById('successOverlay').classList.add('hidden');
+      showSection('loginSection');
+      switchTab('voter');
+    }
+
+    function logout() {
+      showSection('loginSection');
+      switchTab('voter');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      loadState();
+      showSection('loginSection');
+      switchTab('voter');
+      
+      // Auto-refresh vote count every 5 seconds when in voting mode
+      setInterval(() => {
+        const votingSection = document.getElementById('votingSection');
+        if (votingSection && !votingSection.classList.contains('hidden')) {
+          updateLiveVoteCount();
+        }
+      }, 5000);
     });
   </script>
 </body>
