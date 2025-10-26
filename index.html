@@ -7,7 +7,7 @@
   <meta name="description" content="8th A Elects - School Voting System by Swapnil Pandey 8th C is the official voting site for class PM SHRI KV NO.1 AFS SAMBRA's 8th A election activity. This site would only be accessible till 21/10/2025.">
   <link rel="icon" href="favicon.png">
   <link rel="icon" type="image/png" href="favicon.png">
-  <title>8th A Elects - School Voting System by Swapnil Pandey 8th C</title>
+  <title>8th B Elects - School Voting System by Swapnil Pandey 8th C</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -212,8 +212,8 @@
     <!-- Header -->
     <div class="header">
       <img src="favicon.png" alt="8th A Logo" class="logo" onerror="this.style.display='none'">
-      <h1>🗳️ 8th A Elects</h1>
-      <p>Official School Voting System - Class 8A Elections<br/>—by Swapnil Pandey 8th C</p>
+      <h1>🗳️ 8th B Elects</h1>
+      <p>Official School Voting System - Class 8B Elections<br/>—by Swapnil Pandey 8th C</p>
     </div>
 
     <!-- Login Section -->
@@ -255,7 +255,7 @@
       <div class="card">
         <div class="voting-header">
           <img src="favicon.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-          <h2>Class 8A Elections</h2>
+          <h2>Class 8B Elections</h2>
           <p><strong>Select Your Preferred Candidate</strong></p>
         </div>
         <div class="voting-booth-mode">
@@ -292,7 +292,7 @@
             <img src="favicon.png" alt="Logo" class="logo-nav" onerror="this.style.display='none'" style="margin-right: 15px;">
             <div>
               <h2>🔐 Admin Dashboard</h2>
-              <p>Class 8A Election Results —by Swapnil Pandey 8th C</p>
+              <p>Class 8B Election Results —by Swapnil Pandey 8th C</p>
             </div>
           </div>
           <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -352,7 +352,7 @@
       'NOTA': { color: '#95a5a6', candidate: 'None of the above' }
     };
 
-    const adminCred = { user: 'EC8A', pass: '8A@KVSAM' };
+    const adminCred = { user: 'EC8B', pass: '8B@KVSAM' };
 
     // Utility functions
     function showAlert(containerId, message, type) {
@@ -402,7 +402,7 @@
     // Storage functions - FIXED
     function loadState() {
       try {
-        const savedState = localStorage.getItem('votingState_8A');
+        const savedState = localStorage.getItem('votingState_8B');
         if (savedState) {
           const state = JSON.parse(savedState);
           // Ensure all current parties exist, merge saved votes
@@ -419,7 +419,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem('votingState_8A', JSON.stringify({ partyVotes }));
+        localStorage.setItem('votingState_8B', JSON.stringify({ partyVotes }));
       } catch (error) {
         console.error('Failed to save voting state');
       }
@@ -735,7 +735,7 @@
 
     function exportResults() {
       const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
-      let resultText = `Class 8A Election Results - FINAL REPORT\n`;
+      let resultText = `Class 8B Election Results - FINAL REPORT\n`;
       resultText += `Generated on: ${new Date().toLocaleString()}\n`;
       resultText += `Total Votes Cast: ${totalVotes}\n\n`;
       resultText += `RESULTS (Ranked by Votes Received):\n`;
