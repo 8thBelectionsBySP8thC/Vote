@@ -3,11 +3,11 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="nQ1NXJouz3tMpwGnF91_Iqu3ORamVYhRLYi0Zr_RzUE" />
-  <meta name="keywords" content="8th C Elections, 8th C Elects, Elections Class 8th C">
-  <meta name="description" content="8th C Elects - School Voting System by Swapnil Pandey is the official voting site for class PM SHRI KV NO.1 AFS SAMBRA's 8th C election activity. This site would only be accessible till 21/10/2025.">
+  <meta name="keywords" content="8th A Elections, 8th A Elects, Elections Class 8th A">
+  <meta name="description" content="8th A Elects - School Voting System by Swapnil Pandey 8th C is the official voting site for class PM SHRI KV NO.1 AFS SAMBRA's 8th A election activity. This site would only be accessible till 21/10/2025.">
   <link rel="icon" href="favicon.png">
   <link rel="icon" type="image/png" href="favicon.png">
-  <title>8th C Elects - School Voting System by Swapnil Pandey</title>
+  <title>8th A Elects - School Voting System by Swapnil Pandey 8th C</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -96,7 +96,7 @@
     .stat-label { font-size:0.95rem; color:var(--text-light); margin-top:6px;}
     .parties-grid {
       display:grid; gap:20px;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      grid-template-columns:repeat(auto-fit,minmin(280px,1fr));
       margin-bottom: 30px;
     }
     .party-card {
@@ -168,6 +168,7 @@
       background:var(--white); border-radius:10px;
       padding:20px; box-shadow:var(--shadow); height:500px;
       margin-bottom:20px;
+      position: relative;
     }
     .voting-header {
       text-align: center;
@@ -210,9 +211,9 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <img src="favicon.png" alt="8th C Logo" class="logo" onerror="this.style.display='none'">
-      <h1>🗳️ 8th C Elects</h1>
-      <p>Official School Voting System - Class 8C Elections<br/>—by Swapnil Pandey</p>
+      <img src="favicon.png" alt="8th A Logo" class="logo" onerror="this.style.display='none'">
+      <h1>🗳️ 8th A Elects</h1>
+      <p>Official School Voting System - Class 8A Elections<br/>—by Swapnil Pandey 8th C</p>
     </div>
 
     <!-- Login Section -->
@@ -254,24 +255,20 @@
       <div class="card">
         <div class="voting-header">
           <img src="favicon.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-          <h2>Class 8C Elections</h2>
+          <h2>Class 8A Elections</h2>
           <p><strong>Select Your Preferred Candidate</strong></p>
         </div>
-
         <div class="voting-booth-mode">
           <h3>🏛️ POLLING BOOTH MODE ACTIVE</h3>
           <p>Continuous voting in progress</p>
         </div>
-
         <div class="total-votes-display" id="liveVoteCount">
           Total Votes Cast: 0
         </div>
-
         <div class="navigation">
           <div></div>
           <button class="btn btn-secondary" onclick="backToHome()">🏠 Exit Polling Booth</button>
         </div>
-        
         <div id="votingAlerts"></div>
         <div class="parties-grid" id="partiesGrid"></div>
         <button class="btn btn-success btn-large" onclick="submitVote()" id="voteButton">🗳️ CAST VOTE</button>
@@ -295,7 +292,7 @@
             <img src="favicon.png" alt="Logo" class="logo-nav" onerror="this.style.display='none'" style="margin-right: 15px;">
             <div>
               <h2>🔐 Admin Dashboard</h2>
-              <p>Class 8C Election Results —by Swapnil Pandey</p>
+              <p>Class 8A Election Results —by Swapnil Pandey 8th C</p>
             </div>
           </div>
           <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -336,26 +333,26 @@
     let countdownTimer = null;
     let selectedParty = null;
     
-    // Vote data
+    // Vote data - FIXED: Initialize with all parties
     const partyVotes = {
-      'Future Force Party': 0,
-      'Curious Minds': 0,
-      'Bhartiya Ekta Party': 0,
-      'Student Unity Party': 0,
-      'Josh Party': 0,
+      'Equality Force': 0,
+      'Nikhil Unity Force': 0,
+      'Phoenix': 0,
+      'Vishakha': 0,
+      'Bharat Vikas Party': 0,
       'NOTA': 0
     };
 
     const parties = {
-      'Future Force Party': { color: '#3498db', candidate: 'Yash' },
-      'Curious Minds': { color: '#e74c3c', candidate: 'Deepanshi' },
-      'Bhartiya Ekta Party': { color: '#2ecc71', candidate: 'Sanjeet' },
-      'Student Unity Party': { color: '#f39c12', candidate: 'Bhumika' },
-      'Josh Party': { color: '#9b59b6', candidate: 'Anushree' },
-      'NOTA': { color: '#95a5a6', candidate: 'None Of The Above' }
+      'Equality Force': { color: '#3498db', candidate: 'Kedar' },
+      'Nikhil Unity Force': { color: '#e74c3c', candidate: 'Nikhil' },
+      'Phoenix': { color: '#2ecc71', candidate: 'Aradhya' },
+      'Vishakha': { color: '#f39c12', candidate: 'Navya' },
+      'Bharat Vikas Party': { color: '#9b59b6', candidate: 'Kashvi' },
+      'NOTA': { color: '#95a5a6', candidate: 'None of the above' }
     };
 
-    const adminCred = { user: 'ECSP', pass: 'SP@KVSAM' };
+    const adminCred = { user: 'EC8A', pass: '8A@KVSAM' };
 
     // Utility functions
     function showAlert(containerId, message, type) {
@@ -402,13 +399,18 @@
       }
     }
 
-    // Storage functions
+    // Storage functions - FIXED
     function loadState() {
       try {
-        const savedState = localStorage.getItem('votingState');
+        const savedState = localStorage.getItem('votingState_8A');
         if (savedState) {
           const state = JSON.parse(savedState);
-          Object.assign(partyVotes, state.partyVotes || {});
+          // Ensure all current parties exist, merge saved votes
+          Object.keys(partyVotes).forEach(party => {
+            if (state.partyVotes && state.partyVotes[party] !== undefined) {
+              partyVotes[party] = state.partyVotes[party];
+            }
+          });
         }
       } catch (error) {
         console.log('No previous voting state found');
@@ -417,7 +419,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem('votingState', JSON.stringify({ partyVotes }));
+        localStorage.setItem('votingState_8A', JSON.stringify({ partyVotes }));
       } catch (error) {
         console.error('Failed to save voting state');
       }
@@ -574,7 +576,10 @@
       }
       
       showSection('adminSection');
-      updateAdminDashboard();
+      // FIXED: Add delay to ensure DOM is ready
+      setTimeout(() => {
+        updateAdminDashboard();
+      }, 100);
     }
 
     function updateAdminDashboard() {
@@ -603,10 +608,16 @@
 
     function renderChart() {
       const canvas = document.getElementById('partyChart');
-      if (!canvas) return;
+      if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+      }
       
       const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+      if (!ctx) {
+        console.error('Canvas context not available');
+        return;
+      }
       
       // Destroy existing chart
       if (charts.main) {
@@ -615,15 +626,45 @@
       
       const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
       
+      // FIXED: Better handling for zero votes
       if (totalVotes === 0) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#666';
-        ctx.textAlign = 'center';
-        ctx.fillText('No votes cast yet', canvas.width / 2, canvas.height / 2);
+        // Still create chart but with placeholder data
+        charts.main = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: Object.keys(partyVotes).map(party => `${party} (${parties[party].candidate})`),
+            datasets: [{
+              data: Object.keys(partyVotes).map(() => 1), // Equal placeholder
+              backgroundColor: Object.keys(partyVotes).map(party => parties[party].color + '40'), // Semi-transparent
+              borderWidth: 2,
+              borderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  padding: 20,
+                  usePointStyle: true
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function() {
+                    return 'No votes yet';
+                  }
+                }
+              }
+            }
+          }
+        });
         return;
       }
       
+      // FIXED: Create chart with actual data
       charts.main = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -643,7 +684,21 @@
               position: 'bottom',
               labels: {
                 padding: 20,
-                usePointStyle: true
+                usePointStyle: true,
+                font: {
+                  size: 12
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((value / total) * 100).toFixed(1);
+                  return `${label}: ${value} votes (${percentage}%)`;
+                }
               }
             }
           }
@@ -658,7 +713,7 @@
       const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
       
       if (totalVotes === 0) {
-        container.innerHTML = '<p style="text-align:center;color:var(--text-light)">No votes cast yet</p>';
+        container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:20px;">No votes cast yet</p>';
         return;
       }
       
@@ -680,7 +735,7 @@
 
     function exportResults() {
       const totalVotes = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
-      let resultText = `Class 8C Election Results - FINAL REPORT\n`;
+      let resultText = `Class 8A Election Results - FINAL REPORT\n`;
       resultText += `Generated on: ${new Date().toLocaleString()}\n`;
       resultText += `Total Votes Cast: ${totalVotes}\n\n`;
       resultText += `RESULTS (Ranked by Votes Received):\n`;
@@ -705,7 +760,7 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `8C_Election_Results_${new Date().toISOString().split('T')[0]}.txt`;
+      link.download = `8A_Election_Results_${new Date().toISOString().split('T')[0]}.txt`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -719,7 +774,6 @@
         });
         saveState();
         updateAdminDashboard();
-        showAlert('votingAlerts', 'All votes have been reset successfully', 'success');
       }
     }
 
